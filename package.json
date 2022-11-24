@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
+    "axios": "^1.2.0",
+    "cheerio": "^1.0.0-rc.12",
+    "moment": "^2.29.4",
     "nodemon": "^2.0.20",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.1"

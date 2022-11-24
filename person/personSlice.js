@@ -4,6 +4,7 @@ const initialState = {
   fullness: 100,
   happiness: 100,
   healthy: 100,
+  spirit: 100,
 };
 
 const reducers = {
@@ -14,8 +15,16 @@ const reducers = {
   eatLunchSuccess: (state) => {
     state.fullness += 10;
   },
+  eatLunchError: (state) => {},
   eatDinnerSuccess: (state) => {
     state.fullness += 10;
+  },
+  worship: () => {},
+  worshipSuccess: (state) => {
+    state.spirit += 10;
+  },
+  worshipFail: (state) => {
+    state.spirit -= 10;
   },
 };
 
