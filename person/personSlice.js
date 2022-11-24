@@ -2,16 +2,19 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
   fullness: 100,
+  happiness: 100,
+  healthy: 100,
 };
 
 const reducers = {
-  eatBreakfast: (state) => {
+  eatBreakfastSuccess: (state) => {
     state.fullness += 10;
   },
-  eatLunch: (state) => {
+  eatLunch: () => {},
+  eatLunchSuccess: (state) => {
     state.fullness += 10;
   },
-  eatDinner: (state) => {
+  eatDinnerSuccess: (state) => {
     state.fullness += 10;
   },
 };
@@ -22,11 +25,13 @@ const personSlice = createSlice({
   reducers,
 });
 
-const { eatBreakfast, eatLunch, eatDinner } = personSlice.actions;
+const { eatBreakfastSuccess, eatLunch, eatLunchSuccess, eatDinnerSuccess } =
+  personSlice.actions;
 
 module.exports = {
   personSlice,
-  eatBreakfast,
+  eatBreakfastSuccess,
   eatLunch,
-  eatDinner,
+  eatLunchSuccess,
+  eatDinnerSuccess,
 };

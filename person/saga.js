@@ -1,4 +1,4 @@
-const { call, put, takeEvery } = require("redux-saga/effects");
+const { select, call, put, takeEvery } = require("redux-saga/effects");
 
 function* eatBreakfastSaga() {
   yield put({
@@ -6,10 +6,28 @@ function* eatBreakfastSaga() {
   });
 }
 
-function* eatLunchSaga() {
-  yield put({
-    type: "person/eatLunchSuccess",
-  });
+const getCash = (state) => state.cash;
+
+function* eatLunchSaga(action) {
+  const { cash } = yield select(getCash);
+  try {
+    if (cash >= 20) {
+      yield put({
+        type: "person/eatLunchSuccess",
+      });
+      yield put({
+        type: "cash/reduceCash",
+        amount: action.payload.cost,
+      });
+    } else {
+      throw new Error("Not enough cash to eat lunch");
+    }
+  } catch (error) {
+    yield put({
+      type: "person/eatLunchError",
+      error,
+    });
+  }
 }
 
 function* eatDinnerSaga() {

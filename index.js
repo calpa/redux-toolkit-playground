@@ -1,15 +1,15 @@
+const { all } = require("redux-saga/effects");
 const { configureStore, combineReducers } = require("@reduxjs/toolkit");
 const createSagaMiddleware = require("redux-saga").default;
 
 const { createLogger } = require("redux-logger");
 
-const {
-  personSlice,
-  eatBreakfast,
-  eatLunch,
-  eatDinner,
-} = require("./person/personSlice");
+const { personSlice, eatLunch } = require("./person/personSlice");
+
+const { cashSlice } = require("./cash/cashSlice");
+
 const { personSaga } = require("./person/saga");
+const { cashSaga } = require("./cash/saga");
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -21,12 +21,23 @@ const logger = createLogger({
 const store = configureStore({
   reducer: combineReducers({
     person: personSlice.reducer,
+    cash: cashSlice.reducer,
   }),
   middleware: [sagaMiddleware, logger],
 });
 
-sagaMiddleware.run(personSaga);
+function* rootSaga() {
+  yield all([personSaga(), cashSaga()]);
+}
 
-store.dispatch(eatBreakfast());
-store.dispatch(eatLunch());
-store.dispatch(eatDinner());
+sagaMiddleware.run(rootSaga);
+
+// store.dispatch(eatBreakfast());
+store.dispatch(
+  eatLunch({
+    cuisine: "Japanese",
+    cost: 40,
+  })
+);
+// store.dispatch(eatDinner());
+// store.dispatch(buyMilk());
